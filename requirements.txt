@@ -3,7 +3,7 @@ pyyaml==6.0
 pip-licenses==4.1.0
 python-box[pyyaml]==7.0.1
 requirements-parser==0.5.0
-requests==2.25.1
+requests==2.31.0
 jupyter==1.0.0
 dockerfile-parse==2.0.0
 jsonschema[format-nongpl]==3.2.0
