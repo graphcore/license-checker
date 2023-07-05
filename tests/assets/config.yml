@@ -1,0 +1,18 @@
+license:
+  allowlist:
+    - 'apache (:?software )?license.*(:?2\.0)?'
+    - 'apache[ \-]?(:?license )?v?2(:?\.0)?.*'
+    - 'mit(?: license)?'
+  denylist:
+    - GPL(:?\-[2,3].0)
+pip:
+  allowlist:
+    - Pillow
+  denylist:
+    - shortuuid
+apt:
+  cache_path: .license-cache
+  allowlist: []
+  denylist: []
+confluence:
+  base_url: https://graphcore.atlassian.net

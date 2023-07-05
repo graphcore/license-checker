@@ -1,0 +1,41 @@
+name: license-check
+on: ["workflow_dispatch"]
+jobs:
+  check_license:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install prerequisites
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-apt git libopenmpi-dev
+          pip install --upgrade pip
+          python -c 'import sys; print(sys.version)'
+      - uses: actions/checkout@v3
+      - name: Write SSH key to disk
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+          sudo chmod 600 ~/.ssh/private.key
+      - name: Install GC Licensing (dev branch)
+        env:
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/private.key"
+        run: pip install git+ssh://git@github.com/graphcore/gc-license-checker-internal.git@dev
+      - name: Run GC Licensing
+        run: gc-license --find-pip-files --find-dockerfiles --find-notebooks --repository . --output-path output-report.html --junit-path junit-report.xml --fail-on-transitive
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports_${{ github.run_id }}
+          path: |
+            junit-report.xml
+            output-report.html
+      - name: Annotate Run
+        if: always()
+        uses: mikepenz/action-junit-report@c0e4b81aaa0067314a2d0d06e19b512c9d8af4f5 # v3.7.7 (pinned for security reasons)
+        with:
+          check_name: Report ${{ matrix.app.dir }}
+          report_paths: junit-report.xml
