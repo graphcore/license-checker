@@ -1,0 +1,13 @@
+airium==0.2.5
+pyyaml==6.0
+pip-licenses==4.1.0
+python-box[pyyaml]==7.0.1
+requirements-parser==0.5.0
+requests==2.25.1
+jupyter==1.0.0
+dockerfile-parse==2.0.0
+jsonschema[format-nongpl]==3.2.0
+wheel==0.38.4
+junit-xml==1.9
+pkginfo==1.9.6
+beautifulsoup4==4.11.2

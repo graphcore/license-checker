@@ -1,0 +1,16 @@
+license:
+  allowlist:
+    - "mit(?: license)?"
+    # Add other licenses here as regex strings
+  denylist:
+    - 'L?GPL(:?\-[2,3].0)'
+    # Add other licenses here as regex strings
+pip:
+  allowlist:
+    - pandas
+    # Add other packages here - exact names only.
+  denylist: []
+apt:
+  cache_path: .license-cache
+  allowlist: []
+  denylist: []
